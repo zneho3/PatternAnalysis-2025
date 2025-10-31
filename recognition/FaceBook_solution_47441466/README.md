@@ -6,6 +6,9 @@ This repository contains the solution for Problem 4 of the assignment, which inv
 
 The original dataset to be used as outlined in the spec sheet was in a .npz file, which had simplified features reduced to 128 dimensions. However, this file was unavailable. Instead, the raw dataset in csv format was used, which did not have an impact on performance or training times.The dataset consists of three csv files: `musae_facebook_edges.csv`, `musae_facebook_target.csv`, and `musae_facebook_features.csv`. The edges file contains the connections between nodes, the target file contains the labels for each node, and the features file contains the feature vectors for each node.  Minimal preprocessing was performed, outside of converting the csv files into a graph structure, outside of splitting the data into training, validation, and test sets using masking.
 
+## What this project solves
+
+Graph Neural Networks (GNNs) are a class of neural networks designed to operate on graph-structured data. They are particularly useful for tasks such as node classification, link prediction, and graph classification. In this project, a GNN model is implemented to perform node classification on the Facebook Large Page-Page Network Dataset. The goal is to predict the labels of nodes in the graph based on their features and the structure of the graph. There are many applications for this type of analysis, including social network analysis, recommendation systems, and fraud detection, among others. This project aims to demonstrate the effectiveness of GNNs in handling graph-structured data and their ability to learn meaningful representations for node classification tasks, and to achieve high accuracy on the Facebook dataset.
 
 ## Model Description
 
@@ -99,6 +102,7 @@ The scatter plot below shows the t-SNE visualisation of the node embeddings lear
 
 ![TSNE Visualisation of Node Embeddings](tsne.png)
 
+Overall the model performed well on the Facebook Large Page-Page Network Dataset, achieving high accuracy and learning meaningful node representations.
 
 ## Project note
 
