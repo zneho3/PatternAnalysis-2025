@@ -72,7 +72,7 @@ torch
 torch_geometric
 ```
 
-These are automatically installed when using the Jupyter notebooks in Google Colab.
+These are automatically installed when using the Jupyter notebooks in Google Colab. To use in Colab, upload the entire `Facebook_solution_47441466` folder with the Facebook data inside to your Google Drive, adjust your `config.py` locally and then run the notebooks from there. First run the training notebook, then the prediction notebook.
 
 ## Findings
 
