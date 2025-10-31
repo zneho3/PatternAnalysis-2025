@@ -1,8 +1,0 @@
-matplotlib
-networkx
-numpy
-pandas
-scikit_learn
-torch
-torch_geometric
-# Leave versions unspecified to avoid conflicts especially with colab environments
