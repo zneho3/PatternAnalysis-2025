@@ -2,7 +2,7 @@ import torch
 from dataset import FacebookData
 from modules import GCN
 import matplotlib.pyplot as plt
-from config import TRAIN_RATIO, VAL_RATIO, TEST_RATIO, SEED, NUM_EPOCHS, LEARNING_RATE
+from config import TRAIN_RATIO, VAL_RATIO, TEST_RATIO, SEED, NUM_EPOCHS, LEARNING_RATE, MODEL_PATH, DATA_PATH_PREFIX, LOSS_BUFFER
 from sklearn.manifold import TSNE
 #set seed for reproducibility
 # torch.manual_seed(SEED)
@@ -11,7 +11,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class Trainer:
-    def __init__(self, model_path=None, data_path_prefix='/content/drive/MyDrive/COMP3710/A3/facebook'):
+    def __init__(self, model_path=MODEL_PATH, data_path_prefix=DATA_PATH_PREFIX, predict_mode=False):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # load dataset (load_data will attach train/val/test masks)
         dataset = FacebookData(data_path_prefix)
@@ -24,7 +24,7 @@ class Trainer:
 
         self.model = GCN(in_channels=in_channels, hidden_channels=16, out_channels=out_channels).to(self.device)
         # load weights only if a path was provided
-        if model_path:
+        if predict_mode and model_path is not None:
             state = torch.load(model_path, map_location=self.device)
             self.model.load_state_dict(state)
 
@@ -40,7 +40,11 @@ class Trainer:
         criterion = torch.nn.CrossEntropyLoss()
         train_losses = []
         val_losses = []
-
+        
+        best_val_loss = float('inf')
+        stagnant_epochs = 0
+        
+        
         for epoch in range(self.num_epochs):
             model.train()
             optimizer.zero_grad()
@@ -55,11 +59,23 @@ class Trainer:
                 val_out = model(data.x, data.edge_index)
                 val_loss = criterion(val_out[val_mask], data.y[val_mask])
                 val_losses.append(val_loss.item())
-
+                
+            
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                torch.save(model.state_dict(), MODEL_PATH)
+                stagnant_epochs = 0
+            else:
+                stagnant_epochs += 1
+                
+            if stagnant_epochs >= LOSS_BUFFER:
+                print(f'Early stopping at epoch {epoch+1} due to no improvement in validation loss for {LOSS_BUFFER} epochs.')
+                break
             if (epoch+1) % 10 == 0:
                 print(f'Epoch {epoch+1}, Train Loss: {loss.item():.4f}, Val Loss: {val_loss.item():.4f}')
         # Save the trained model
-        torch.save(model.state_dict(), 'gcn_facebook_model.pth')
+        
+        # torch.save(model.state_dict(), MODEL_PATH)
         # Plot training and validation losses
         plt.plot(range(self.num_epochs), train_losses, label='Train Loss')
         plt.plot(range(self.num_epochs), val_losses, label='Validation Loss')
