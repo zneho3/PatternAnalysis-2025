@@ -1,5 +1,9 @@
-#Components of the model architecture
-# pip install torch torchvision torchaudio torch-geometric
+"""
+Author: Zachariah Nehow
+Student Number: S4744146
+Description: Module defining the Graph Neural Network (GNN) model architecture using PyTorch Geometric.
+"""
+
 import torch
 import torch.nn as nn
 import torch.optim as optim

@@ -1,3 +1,9 @@
+"""
+Author: Zachariah Nehow
+Student Number: S4744146
+Description: Script for loading a trained GNN model and performing inference on the test dataset.
+"""
+
 import torch
 import numpy as np
 import random
@@ -23,5 +29,5 @@ predictor = Trainer(model_path=MODEL_PATH, data_path_prefix=DATA_PATH_PREFIX, pr
 #### Inference ###
 preds, labels, embeddings = predictor.predict()
 
-### Visualise ###
+### Visualise Predictions###
 predictor.visualise(embeddings, labels)

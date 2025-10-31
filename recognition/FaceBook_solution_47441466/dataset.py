@@ -1,6 +1,10 @@
 
 """"
 File: dataset.py
+
+Author: Zachariah Nehow
+Student Number: S4744146
+
 Description: Dataset classes for loading and preprocessing graph data using PyTorch Geometric.
 Normally this would be done using the npz files provided, but here we use the csv files directly since we dont have the npz files.
 This will also mean that the data is not the simplified 128 feature version but the full sparse feature version.

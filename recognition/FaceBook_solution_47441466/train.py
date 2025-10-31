@@ -1,3 +1,10 @@
+"""
+Author: Zachariah Nehow
+Student Number: S4744146
+Description: Trainer class for training, predicting, and visualizing a GCN model on the Facebook dataset.
+Includes early stopping based on validation loss.
+"""
+
 import torch
 from modules import GCN
 import matplotlib.pyplot as plt
