@@ -10,9 +10,7 @@ import pandas as pd
 import torch
 from torch_geometric.data import Data
 from sklearn.preprocessing import LabelEncoder
-import matplotlib.pyplot as plt
-import networkx as nx
-from torch_geometric.utils import to_networkx, to_undirected
+from torch_geometric.utils import to_undirected
 
 
 
@@ -32,7 +30,8 @@ class FacebookData:
     def load_data(self, file_path_prefix=None):
         """
         Load graph data from CSV files and create a PyTorch Geometric Data object. Maybe can update to use npz files later.
-        
+        Microsoft Copilot generated most of this function as I was couldnt find any references online for loading from csv files,
+        since normally the data is in npz format.
         file_path_prefix (str): Prefix path to the folder containign the csv files
         Returns:
             data (Data): PyTorch Geometric Data object containing node features, edge indices, and labels.
@@ -68,7 +67,7 @@ class FacebookData:
         src = [node_map[i] for i in edge_df_filtered['id_1']]
         dst = [node_map[i] for i in edge_df_filtered['id_2']]
         edge_index = torch.tensor([src, dst], dtype=torch.long)
-        # make undirected (typical for this dataset / GCN usage)
+        # make undirected
         edge_index = to_undirected(edge_index)
 
         # Load labels

@@ -10,11 +10,12 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 
-#used this resource to understand GCNs better, as wel as code structure/example
-# https://www.geeksforgeeks.org/deep-learning/graph-convolutional-networks-gcns-architectural-insights-and-applications/
-
-#basic GCN model for now, can flesh out later
+#Reference: https://www.datacamp.com/tutorial/comprehensive-introduction-graph-neural-networks-gnns-tutorial
 class GCN(nn.Module):
+    """
+    Graph Convolutional Network (GCN) model for node classification.
+    Two graph convolutional layers with ReLU activation in between.
+    """
     def __init__(self, in_channels, hidden_channels, out_channels):
         super(GCN, self).__init__()
         #change later if we need things like normalization, dropout, etc.
